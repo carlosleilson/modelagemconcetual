@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.leilson.Repository.CategoriaRepository;
 import br.com.leilson.domain.Categoria;
+import br.com.leilson.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -16,6 +17,7 @@ public class CategoriaService {
 	
 	public Categoria buscarPorId(Integer id) {
 		Optional<Categoria> categoriaTmp = repo.findById(id);
-		return categoriaTmp.orElse(null);
+		return categoriaTmp.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 }
